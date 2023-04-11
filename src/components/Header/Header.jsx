@@ -7,15 +7,20 @@ function Header () {
     const toggleNav = () => {
         setIsNavOpen(!isNavOpen);
     };
+    const hideNav = () => {
+        setIsNavOpen(false);
+    }
 
     return (
         <header>
-            <button className="nav-btn" onClick={toggleNav}>
+            <button className="nav-btn" onClick={toggleNav} >
                 ☰
             </button>
-            <div className={`nav-bar ${isNavOpen ? 'open' : 'close'}`}>
-                <li><Link to='/search'>Search</Link></li>
-                <li><Link to='/wishlist'>WishList</Link></li>
+            <div className={`nav-bar-wrapper ${isNavOpen ? 'open' : 'close'}`} onBlur={hideNav}>
+                <div className='nav-bar'>
+                    <li><Link to='/search' onClick={hideNav}>Search</Link></li>
+                    <li><Link to='/wishlist' onClick={hideNav}>WishList</Link></li>
+                </div>
             </div>
         </header>
     );
