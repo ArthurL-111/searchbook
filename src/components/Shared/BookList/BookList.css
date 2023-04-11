@@ -69,6 +69,10 @@
     align-items: center;
 }
 
+.book-thumbnail:hover {
+    cursor: pointer;
+}
+
 .book-thumbnail img {
     height: 90%;
     max-width: 90%;
@@ -92,6 +96,15 @@
     display: flex;
     align-items: center;
     margin-right: 3px;
+}
+
+img {
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+  
+img:hover {
+    transform: scale(1.2);
 }
 
 @media (max-width: 850px) {
