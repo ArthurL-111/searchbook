@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const useFetchBooks = (query, trigger) => {
     const [bookList, setBookList] = useState([]);
-    const [loadState, setLoadState] = useState('init'); // [init, loading, loaded]
+    const [loadState, setLoadState] = useState('init'); // [init, loading, loaded, error]
 
     useEffect(() => {
         if (!query) return;
@@ -16,7 +16,10 @@ const useFetchBooks = (query, trigger) => {
                     setBookList(data.items);
                     setLoadState('loaded');
                 })
-            .catch((err) => console.log(`Query err: ${err}`));
+            .catch((err) => {
+                console.log(`Query err: ${err}`)
+                setLoadState('error')
+            });
         }
     }, [query, trigger]);
 
