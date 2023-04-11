@@ -1,0 +1,22 @@
+.nav-bar {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    background-color: #393646;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.nav-bar li {
+    padding: 10px 20px;
+}
+
+.nav-bar li:hover {
+    background-color: #4F4557;
+}
+
+.nav-bar a {
+    color: aliceblue;
+    text-decoration: none;
+}

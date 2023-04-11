@@ -1,0 +1,27 @@
+.search-page {
+    margin: 100px auto auto auto;
+}
+
+.search-area {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.search-area input {
+    font-size: 16px;
+    width: 300px;
+    height: 30px;
+}
+
+.search-area button {
+    background-color: #4F4557;
+    border: none;
+    border-radius: 5px;
+    color: aliceblue;
+    width: 40px;
+}
+
+.search-area button:hover {
+    cursor: pointer;
+}
