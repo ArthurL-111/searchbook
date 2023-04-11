@@ -32,7 +32,7 @@ export default function Search() {
             case 'loading':
                 return <h3 className='book-list'>Finding your book...</h3>;
             case 'error':
-                return <h3 className='book-list'>Something went wrong when finding you books.</h3>;
+                return <h3 className='book-list'>Something went wrong when finding you books. Try again later.</h3>;
             default:
                 return null;
         }

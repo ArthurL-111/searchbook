@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import useWishList from '../../../utils/Hooks/useWishList';
 import './InfoWindow.css';
 
-export default function InfoWindow({isOpen, closeWindow, bookInfo, handleAdd, handleDelete}) {
-    
+export default function InfoWindow({isOpen, closeWindow, bookInfo}) {
+    const { wishedBookIds, handleAdd } = useWishList();
+
     const [bookDetail, setBookDetail] = useState({
         title: '',
         imgLink: null,
@@ -71,7 +73,7 @@ export default function InfoWindow({isOpen, closeWindow, bookInfo, handleAdd, ha
                     <a href={bookDetail.previewLink} target="_blank" rel="noopener noreferrer">Click to preview</a>
                 </div>
                 {
-                    bookDetail.isInWishList 
+                    wishedBookIds.hasOwnProperty(bookInfo.book.id) 
                         ? <button className='wl-btn' disabled>Already in wish list</button> 
                         : <button className='wl-btn' onClick={handleAddWindow}>Add to WishList</button>
                 }

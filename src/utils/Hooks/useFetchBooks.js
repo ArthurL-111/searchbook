@@ -16,11 +16,16 @@ const useFetchBooks = (query, trigger) => {
                     setBookList(data.items);
                     setLoadState('loaded');
                 })
-            .catch((err) => {
-                console.log(`Query err: ${err}`)
-                setLoadState('error')
-            });
+                .catch((err) => {
+                    console.log(`Query err: ${err}`)
+                    setLoadState('error')
+                });
         }
+
+        return () => { // cleanup function, called when unmounted or dependicies updated
+            setBookList([]);
+            setLoadState("init");
+        };
     }, [query, trigger]);
 
     return { bookList, loadState }

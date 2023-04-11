@@ -1,27 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addBook, deleteBook } from '../../../Redux/store';
+import useWishList from '../../../utils/Hooks/useWishList';
 import InfoWindow from '../InfoWindow/InfoWindow';
 import './BookList.css';
 
 export default function BookList({bookList, resultType}) {
-    const dispatch = useDispatch();
-    const wishedBookIds = useSelector(state => state.wishlist.bookIds);
+    const { wishedBookIds, handleAdd, handleDelete } = useWishList();
     const [isWindowOpen, setIsWindowOpen] = useState(false);
     const [detailInfo, setDetailInfo] = useState({});
-
-    const handleAdd = (book) => {    
-        dispatch(addBook(book));
-    }
-
-    const handleDelete = (id) => {
-        dispatch(deleteBook(id));
-    }
 
     const openWindow = (book) => {
         setDetailInfo({
             book: book,
-            isInWishList: wishedBookIds.hasOwnProperty(book.id),
         });
         setIsWindowOpen(true);
     }
@@ -36,8 +25,6 @@ export default function BookList({bookList, resultType}) {
                 isOpen={isWindowOpen} 
                 closeWindow={closeWindow} 
                 bookInfo={detailInfo} 
-                handleAdd={handleAdd} 
-                handleDelete={handleDelete}
             />
             {
                 bookList && bookList.length !== 0
