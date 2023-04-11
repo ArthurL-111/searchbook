@@ -57,14 +57,14 @@ export default function BookList({bookList, resultType}) {
                                         {book.volumeInfo.title.trim()}
                                     </div>
                                 </div>
-                                <div className='book-auther'>
-                                    <div className='info-type'>Auther</div>
+                                <div className='book-author'>
+                                    <div className='info-type'>Author</div>
                                     <div>
                                         {
-                                            book.volumeInfo.author ?
-                                            book.volumeInfo.authors.map((author) => (
+                                            book.volumeInfo.authors ?
+                                            book.volumeInfo.authors.map((author, index, arr) => (
                                                 <span key={author}>
-                                                    {author}
+                                                    {author}{index < arr.length - 1 ? ', ' : ''}
                                                 </span>
                                             )) : <span>N/A</span>
                                         }

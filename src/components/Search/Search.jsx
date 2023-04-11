@@ -1,33 +1,24 @@
 import React, { useState } from 'react';
 import './Search.css';
 import BookList from '../Shared/BookList/BookList';
+import useFetchBooks from '../../utils/Hooks/useFetchBooks';
 
-export default function Search(props) {
+export default function Search() {
     const [inputValue, setInputValue] = useState('');
-    const [bookList, setBookList] = useState([]);
-    const [loadState, setLoadState] = useState('init'); // [init, loading, loaded]
-    
+    const [triggerFetch, setTriggerFetch] = useState(false)
+    const { bookList, loadState } = useFetchBooks(inputValue.trim(), triggerFetch);
+
     const handleInputChange = (e) => {
-        e.preventDefault();
+        setTriggerFetch(false);
         setInputValue(e.target.value);
     }
 
     const handleSubmit = () => {
         if (inputValue.trim() === ''){
             alert('Please input title!');
-            setLoadState('init');
             return;
         }
-        setLoadState('loading');
-        const query = encodeURIComponent(inputValue);
-        const queryURL = `https://www.googleapis.com/books/v1/volumes?q=${query}&startIndex=0&maxResults=20`;
-        fetch(queryURL)
-            .then((res) => res.json())
-            .then((data) => {
-                setBookList(data.items);
-                setLoadState('loaded');
-            })
-            .catch((err) => console.log(`Query err: ${err}`));
+        setTriggerFetch(true);
     }
 
     const handleKeyDown = (e) => {
@@ -37,7 +28,7 @@ export default function Search(props) {
     return (
         <div className='search-page'>
             <div className='search-area'>
-                <input name="book-search" value={inputValue} onChange={handleInputChange} onKeyDown={handleKeyDown}/>    
+                <input name="book-search" value={inputValue} onKeyDown={handleKeyDown} onChange={handleInputChange}/>    
                 <button onClick={handleSubmit}>GO</button>
             </div>
             {
