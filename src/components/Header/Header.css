@@ -20,3 +20,21 @@
     color: aliceblue;
     text-decoration: none;
 }
+
+.nav-btn {
+    display: none;
+}
+
+@media (max-width: 850px) {
+    .nav-btn {
+        display: block;
+    }
+    
+    .close {
+        display: none;
+    }
+
+    .open {
+        display: block;
+    }
+}

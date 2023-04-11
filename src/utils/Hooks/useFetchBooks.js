@@ -22,7 +22,7 @@ const useFetchBooks = (query, trigger) => {
                 });
         }
 
-        return () => { // cleanup function, called when unmounted or dependicies updated
+        return () => {        // cleanup function, called when unmounted or dependicies updated
             setBookList([]);
             setLoadState("init");
         };
