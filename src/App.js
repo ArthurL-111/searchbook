@@ -1,7 +1,7 @@
 import './App.css';
 import Layout from './components/Layout/Layout';
 import { Provider } from 'react-redux';
-import store from './components/Redux/store';
+import store from './Redux/store';
 
 function App() {
   return (

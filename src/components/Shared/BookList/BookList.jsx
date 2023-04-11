@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBook, deleteBook } from '../../Redux/store';
+import { addBook, deleteBook } from '../../../Redux/store';
 import InfoWindow from '../InfoWindow/InfoWindow';
 import './BookList.css';
 
