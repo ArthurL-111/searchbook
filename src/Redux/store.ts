@@ -1,14 +1,27 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
+
+interface Book {
+    id: string;
+    [key: string]: any;
+}
+
+interface WishListState {
+    books: { [key: string]: Book },
+    bookCount: number,
+    bookIds: { [key: string]: boolean }
+}
+
+const initialState: WishListState = {
+    books: {},
+    bookCount: 0,
+    bookIds: {},
+}
 
 export const wishListSlice = createSlice({
     name: 'WishList',
-    initialState: {
-        books: {},
-        bookCount: 0,
-        bookIds: {},
-    },
+    initialState,
     reducers: {
-        addBook: (state, action) => {
+        addBook: (state, action: PayloadAction<Book>) => {
             const bookToAdd = action.payload;
             const bookId = action.payload.id;
 
@@ -18,7 +31,7 @@ export const wishListSlice = createSlice({
                 state.bookIds[bookId] = true;
             }
         },
-        deleteBook: (state, action) => {
+        deleteBook: (state, action: PayloadAction<string>) => {
             const bookIdToDelete = action.payload;
 
             if (state.books.hasOwnProperty(bookIdToDelete)) {

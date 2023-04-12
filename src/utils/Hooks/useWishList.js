@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { addBook, deleteBook } from '../../Redux/store';
+import { addBook, deleteBook } from '../../Redux/store.ts';
 
 
 const useWishList = () => {

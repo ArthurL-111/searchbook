@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-function Header () {
-    const [isNavOpen, setIsNavOpen] = useState(false);
-    const toggleNav = () => {
+const Header: React.FC = () => {
+    const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+    const toggleNav: VoidFunction = () => {
         setIsNavOpen(!isNavOpen);
     };
-    const hideNav = () => {
+    const hideNav: VoidFunction = () => {
         setIsNavOpen(false);
     }
 
