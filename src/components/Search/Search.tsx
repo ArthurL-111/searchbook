@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import './Search.css';
 import BookList from '../Shared/BookList/BookList';
 import useFetchBooks from '../../utils/Hooks/useFetchBooks';
 
-export default function Search() {
+const Search:React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [triggerFetch, setTriggerFetch] = useState(false)
     const { bookList, loadState } = useFetchBooks(inputValue.trim(), triggerFetch);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>):void => {
         setTriggerFetch(false);
         setInputValue(e.target.value);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit: VoidFunction = ():void => {
         if (inputValue.trim() === ''){
             alert('Please input title!');
             return;
@@ -21,11 +21,11 @@ export default function Search() {
         setTriggerFetch(true);
     }
 
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>):void => {
         if (e.key === 'Enter') handleSubmit(); 
     }
 
-    const contentRender = () => {
+    const contentRender = ():React.ReactNode => {
         switch(loadState){
             case 'loaded':
                 return <BookList bookList={bookList} resultType='search'/>;
@@ -48,3 +48,5 @@ export default function Search() {
         </div>
     )
 }
+
+export default Search;

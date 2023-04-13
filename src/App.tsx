@@ -1,9 +1,10 @@
 import './App.css';
 import Layout from './components/Layout/Layout';
 import { Provider } from 'react-redux';
-import store from './Redux/store.ts';
+import store from './Redux/store';
+import React, { ReactElement } from 'react';
 
-function App() {
+function App(): ReactElement {
   return (
     <Provider store={store}>
       <div className="App">

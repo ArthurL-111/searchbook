@@ -1,19 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import useWishList from '../../../utils/Hooks/useWishList';
 import './InfoWindow.css';
+import { Book } from '../../../utils/Types/bookType';
 
-export default function InfoWindow({isOpen, closeWindow, bookInfo}) {
+interface InfoWindowProps {
+    isOpen: boolean;
+    closeWindow: VoidFunction;
+    bookInfo: {
+        book?: Book;
+    };
+};
+
+interface BookDetail {
+    title: string;
+    imgLink?: string;
+    publisher: string;
+    publishDate: string;
+    industryIdentifiers: any[];
+    pageCount: string | number;
+    previewLink?: string;
+  }
+
+const InfoWindow: React.FC<InfoWindowProps> = ({isOpen, closeWindow, bookInfo}) => {
     const { wishedBookIds, handleAdd } = useWishList();
 
-    const [bookDetail, setBookDetail] = useState({
+    const [bookDetail, setBookDetail] = useState<BookDetail>({
         title: '',
-        imgLink: null,
+        imgLink: undefined,
         publisher: 'No publisher info.',
         publishDate: 'No publish date.',
         industryIdentifiers: [],
         pageCount: 'No page count info.',
-        previewLink: null,
-        isInWishList: false,
+        previewLink: undefined,
     });
 
     useEffect (() => {
@@ -22,22 +40,18 @@ export default function InfoWindow({isOpen, closeWindow, bookInfo}) {
         }
         const tempInfo = {
             title: bookInfo.book.volumeInfo.title.trim(),
-            imgLink: bookInfo.book.volumeInfo.imageLinks?.thumbnail || null,
+            imgLink: bookInfo.book.volumeInfo.imageLinks?.thumbnail || undefined,
             publisher: bookInfo.book.volumeInfo.publisher || 'No publisher info.',
             publishDate: bookInfo.book.volumeInfo.publishedDate || 'No publish date.',
             industryIdentifiers: bookInfo.book.volumeInfo.industryIdentifiers || [],
             pageCount: bookInfo.book.volumeInfo.pageCount || 'No page count info.',
-            previewLink: bookInfo.book.volumeInfo.previewLink || null,
-            isInWishList: bookInfo.isInWishList,
+            previewLink: bookInfo.book.volumeInfo.previewLink || undefined,
         }
         setBookDetail(tempInfo);
     }, [bookInfo]);
 
     const handleAddWindow = () => {
-        handleAdd(bookInfo.book);
-        setBookDetail((prevState) => {
-            return { ...prevState, isInWishList: true };
-        });
+        if (bookInfo.book) handleAdd(bookInfo.book);
     }
 
     return (
@@ -73,7 +87,7 @@ export default function InfoWindow({isOpen, closeWindow, bookInfo}) {
                     <a href={bookDetail.previewLink} target="_blank" rel="noopener noreferrer">Click to preview</a>
                 </div>
                 {
-                    wishedBookIds.hasOwnProperty(bookInfo.book.id) 
+                    wishedBookIds.hasOwnProperty(bookInfo.book?.id || '') 
                         ? <button className='wl-btn' disabled>Already in wish list</button> 
                         : <button className='wl-btn' onClick={handleAddWindow}>Add to WishList</button>
                 }
@@ -81,3 +95,5 @@ export default function InfoWindow({isOpen, closeWindow, bookInfo}) {
         </div>
     )
 }
+
+export default InfoWindow;

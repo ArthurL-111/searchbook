@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFetchBooks = (query, trigger) => {
+const useFetchBooks = (query:string, trigger:boolean) => {
     const [bookList, setBookList] = useState([]);
     const [loadState, setLoadState] = useState('init'); // [init, loading, loaded, error]
 

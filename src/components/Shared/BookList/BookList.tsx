@@ -1,21 +1,31 @@
 import React, { useState } from 'react';
 import useWishList from '../../../utils/Hooks/useWishList';
 import InfoWindow from '../InfoWindow/InfoWindow';
+import { Book } from '../../../utils/Types/bookType';
 import './BookList.css';
 
-export default function BookList({bookList, resultType}) {
-    const { wishedBookIds, handleAdd, handleDelete } = useWishList();
-    const [isWindowOpen, setIsWindowOpen] = useState(false);
-    const [detailInfo, setDetailInfo] = useState({});
+interface BookListProps {
+    bookList: Book[],
+    resultType: string,
+}
 
-    const openWindow = (book) => {
+interface DetailInfo {
+    book?: Book;
+}
+
+const BookList:React.FC<BookListProps> = ({bookList, resultType}) => {
+    const { wishedBookIds, handleAdd, handleDelete } = useWishList();
+    const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
+    const [detailInfo, setDetailInfo] = useState<DetailInfo>({ book: undefined });
+
+    const openWindow = (book:Book):void => {
         setDetailInfo({
             book: book,
         });
         setIsWindowOpen(true);
     }
 
-    const closeWindow = () => {
+    const closeWindow:VoidFunction = ():void => {
         setIsWindowOpen(false);
     }
 
@@ -70,21 +80,24 @@ export default function BookList({bookList, resultType}) {
                                     </div>
                                 </div>
                                 {
-                                    book.volumeInfo.industryIdentifiers ?
-                                    book.volumeInfo.industryIdentifiers.map((isbn) => (
-                                        <div className='book-isbn' key={isbn.identifier}>
-                                            <div className='info-type'>{isbn.type}</div>
-                                            <div>
-                                                {isbn.identifier}
+                                    book.volumeInfo.industryIdentifiers 
+                                        ? book.volumeInfo.industryIdentifiers.map((isbn) => (
+                                            <div className='book-isbn' key={isbn.identifier}>
+                                                <div className='info-type'>{isbn.type}</div>
+                                                <div>
+                                                    {isbn.identifier}
+                                                </div>
                                             </div>
-                                        </div>
-                                    )) : null
+                                        )) : null
                                 }
                             </div>
                             <div className='book-ops'>
-                                {   resultType === 'search' 
-                                    ? wishedBookIds.hasOwnProperty(book.id) ? <button disabled>+</button> : <button onClick={() => handleAdd(book)}>+</button> 
-                                    : <button onClick={() => handleDelete(book.id)}>-</button>
+                                {   
+                                    resultType === 'search' 
+                                        ? wishedBookIds.hasOwnProperty(book.id) 
+                                            ? <button disabled>+</button> 
+                                            : <button onClick={() => handleAdd(book)}>+</button> 
+                                        : <button onClick={() => handleDelete(book.id)}>-</button>
                                 }
                             </div>
                         </div>
@@ -95,3 +108,5 @@ export default function BookList({bookList, resultType}) {
         </div>
     )
 }
+
+export default BookList;

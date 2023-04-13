@@ -1,15 +1,6 @@
 import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
-
-interface Book {
-    id: string;
-    [key: string]: any;
-}
-
-interface WishListState {
-    books: { [key: string]: Book },
-    bookCount: number,
-    bookIds: { [key: string]: boolean }
-}
+import { Book } from "../utils/Types/bookType";
+import { WishListState } from "../utils/Types/reduxStateType";
 
 const initialState: WishListState = {
     books: {},
