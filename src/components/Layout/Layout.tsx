@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../Header/Header';
 
-export default function Layout() {
+const Layout:React.FC = () => {
   return (
     
     <React.Fragment>
@@ -12,3 +12,5 @@ export default function Layout() {
 
   );
 }
+
+export default Layout;

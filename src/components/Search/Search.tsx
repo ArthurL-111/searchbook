@@ -1,24 +1,24 @@
-import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
+import React, { useState, KeyboardEvent, useEffect, useRef } from 'react';
 import './Search.css';
 import BookList from '../Shared/BookList/BookList';
 import useFetchBooks from '../../utils/Hooks/useFetchBooks';
 
 const Search:React.FC = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [triggerFetch, setTriggerFetch] = useState(false)
-    const { bookList, loadState } = useFetchBooks(inputValue.trim(), triggerFetch);
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>):void => {
-        setTriggerFetch(false);
-        setInputValue(e.target.value);
-    }
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [inputValue, setInputValue] = useState<string>('');
+    const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
+    const { bookList, loadState } = useFetchBooks(inputValue, triggerFetch);
 
     const handleSubmit: VoidFunction = ():void => {
-        if (inputValue.trim() === ''){
-            alert('Please input title!');
-            return;
+        if (inputRef.current){
+            const inputVal = inputRef.current.value.trim();
+            if (inputVal.trim() === ''){
+                alert('Please input title!');
+                return;
+            }
+            setInputValue(inputVal);
+            setTriggerFetch(true);
         }
-        setTriggerFetch(true);
     }
 
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>):void => {
@@ -38,10 +38,14 @@ const Search:React.FC = () => {
         }
     }
 
+    useEffect(() => {
+        console.log(loadState);
+    }, [loadState])
+
     return (
         <div className='search-page'>
             <div className='search-area'>
-                <input name="book-search" value={inputValue} onKeyDown={handleKeyDown} onChange={handleInputChange}/>    
+                <input ref={inputRef} name="book-search" onKeyDown={handleKeyDown} />    
                 <button onClick={handleSubmit}>GO</button>
             </div>
             {contentRender()}

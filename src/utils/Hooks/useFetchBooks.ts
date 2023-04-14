@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
+import { Book } from "../Types/bookType";
 
-const useFetchBooks = (query:string, trigger:boolean) => {
-    const [bookList, setBookList] = useState([]);
-    const [loadState, setLoadState] = useState('init'); // [init, loading, loaded, error]
+interface UseFetchBooksReturnType {
+    bookList: Book[];
+    loadState: string;
+}
+
+const useFetchBooks = (query:string, trigger:boolean): UseFetchBooksReturnType => {
+    const [bookList, setBookList] = useState<Book[]>([]);
+    const [loadState, setLoadState] = useState<string>('init'); // [init, loading, loaded, error]
 
     useEffect(() => {
         if (!query) return;
