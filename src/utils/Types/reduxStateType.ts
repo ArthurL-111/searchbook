@@ -6,6 +6,14 @@ export interface WishListState {
     bookIds: { [key: string]: boolean }
 };
 
+export interface SearchState {
+    keyword: string,
+    isLoading: string,
+    searchedBooks: Book[],
+}
+
 export interface RootState {
     wishlist: WishListState;
+    search: SearchState;
 };
+

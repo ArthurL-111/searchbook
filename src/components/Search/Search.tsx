@@ -1,13 +1,16 @@
-import React, { useState, KeyboardEvent, useEffect, useRef } from 'react';
+import React, { KeyboardEvent, useEffect, useRef } from 'react';
 import './Search.css';
 import BookList from '../Shared/BookList/BookList';
-import useFetchBooks from '../../utils/Hooks/useFetchBooks';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../Redux/store';
+import { RootState } from '../../utils/Types/reduxStateType';
+import { setKeyWord, searchBook } from '../../Redux/searchSlice';
 
 const Search:React.FC = () => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const [inputValue, setInputValue] = useState<string>('');
-    const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
-    const { bookList, loadState } = useFetchBooks(inputValue, triggerFetch);
+    const bookList = useSelector((state: RootState) => state.search.searchedBooks);
+    const loadState = useSelector((state: RootState) => state.search.isLoading);
+    const dispatch = useAppDispatch();
 
     const handleSubmit: VoidFunction = ():void => {
         if (inputRef.current){
@@ -16,8 +19,9 @@ const Search:React.FC = () => {
                 alert('Please input title!');
                 return;
             }
-            setInputValue(inputVal);
-            setTriggerFetch(true);
+            // setTriggerFetch(true);
+            dispatch(setKeyWord(inputVal));
+            dispatch(searchBook());
         }
     }
 
