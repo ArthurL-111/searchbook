@@ -10,6 +10,9 @@ export interface SearchState {
     keyword: string,
     isLoading: string,
     searchedBooks: Book[],
+    currentPageNum: number,
+    totalPageNum: number,
+    itemsPerPage: number,
 }
 
 export interface RootState {

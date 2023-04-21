@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useEffect, useRef } from 'react';
+import React, { KeyboardEvent, useRef } from 'react';
 import './Search.css';
 import BookList from '../Shared/BookList/BookList';
 import { useSelector } from 'react-redux';
@@ -19,7 +19,6 @@ const Search:React.FC = () => {
                 alert('Please input title!');
                 return;
             }
-            // setTriggerFetch(true);
             dispatch(setKeyWord(inputVal));
             dispatch(searchBook());
         }
@@ -34,17 +33,13 @@ const Search:React.FC = () => {
             case 'loaded':
                 return <BookList bookList={bookList} resultType='search'/>;
             case 'loading':
-                return <h3 className='book-list'>Finding your book...</h3>;
+                return <div className="lds-ripple"><div></div><div></div></div>;
             case 'error':
                 return <h3 className='book-list'>Something went wrong when finding you books. Try again later.</h3>;
             default:
                 return null;
         }
     }
-
-    useEffect(() => {
-        console.log(loadState);
-    }, [loadState])
 
     return (
         <div className='search-page'>

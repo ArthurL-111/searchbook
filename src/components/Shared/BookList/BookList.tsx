@@ -3,6 +3,10 @@ import useWishList from '../../../utils/Hooks/useWishList';
 import InfoWindow from '../InfoWindow/InfoWindow';
 import { Book } from '../../../utils/Types/bookType';
 import './BookList.css';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../utils/Types/reduxStateType';
+import { swithPage } from '../../../Redux/searchSlice';
+import { useAppDispatch } from '../../../Redux/store';
 
 interface BookListProps {
     bookList: Book[],
@@ -17,6 +21,9 @@ const BookList:React.FC<BookListProps> = ({bookList, resultType}) => {
     const { wishedBookIds, handleAdd, handleDelete } = useWishList();
     const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
     const [detailInfo, setDetailInfo] = useState<DetailInfo>({ book: undefined });
+    const curPage = useSelector((state: RootState) => state.search.currentPageNum);
+    const totalPage = useSelector((state: RootState) => state.search.totalPageNum);
+    const dispatch = useAppDispatch()
 
     const openWindow = (book:Book):void => {
         setDetailInfo({
@@ -27,6 +34,14 @@ const BookList:React.FC<BookListProps> = ({bookList, resultType}) => {
 
     const closeWindow:VoidFunction = ():void => {
         setIsWindowOpen(false);
+    }
+
+    const handlePageUp = () => {
+        dispatch(swithPage(curPage + 1));
+    }
+
+    const handlePageDown = () => {
+        dispatch(swithPage(curPage - 1));
     }
 
     return (
@@ -51,7 +66,7 @@ const BookList:React.FC<BookListProps> = ({bookList, resultType}) => {
                                 <div className='book-title'>
                                     <div className='info-type'>Title</div>
                                     <div>
-                                        {book.volumeInfo.title.trim()}
+                                        {book.volumeInfo.title?.trim()}
                                     </div>
                                 </div>
                                 <div className='book-author'>
@@ -102,8 +117,17 @@ const BookList:React.FC<BookListProps> = ({bookList, resultType}) => {
                             </div>
                         </div>
                     ))
-
                 : resultType === 'search' ? <h2>No books found.</h2> : <h2>You have not added any books to wishlist.</h2>
+            }
+
+            {
+                resultType === 'search' 
+                ? <div className='pagination'>
+                    <button onClick={handlePageDown} disabled={curPage === 1 ? true : false}>prev</button>
+                    <span>{curPage} / {totalPage}</span>
+                    <button onClick={handlePageUp} disabled={curPage === totalPage ? true : false}>next</button>
+                </div> 
+                : null
             }
         </div>
     )
