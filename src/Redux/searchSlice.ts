@@ -34,6 +34,8 @@ export const searchSlice = createSlice({
     reducers: {
         setKeyWord: (state, action) => {
             state.keyword = action.payload;
+            state.currentPageNum = 1;
+            state.totalPageNum = 1;
         },
     },
     extraReducers: (builder) => {

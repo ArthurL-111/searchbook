@@ -10,6 +10,7 @@ import WishList from './components/WishList/WishList';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
+      <Route path='/' element={<Search/>} />
       <Route path='/search' element={<Search/>} />
       <Route path='/wishlist' element={<WishList/>} />
     </Route>
